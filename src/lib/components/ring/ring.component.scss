@@ -1,0 +1,87 @@
+// ── hub-ring — circular gauge / score ring (SVG arc) ────────────────────────
+//
+// Token contract (declare defaults + consume via var()):
+//   --hub-ring-size            Outer diameter (set per-instance in TS).
+//   --hub-ring-thickness       Stroke width of the track and indicator.
+//   --hub-ring-track           Track (unfilled) stroke colour.
+//   --hub-ring-indicator       Indicator (filled) stroke colour, neutral band.
+//   --hub-ring-caption-color   Centre caption text colour.
+//   --hub-ring-low-color       Indicator stroke when below the low threshold.
+//   --hub-ring-high-color      Indicator stroke when at/above the high threshold.
+:where(.hub-ring) {
+	--hub-ring-size: 4rem;
+	--hub-ring-thickness: var(--hub-ref-space-2, 0.5rem);
+	--hub-ring-track: color-mix(in oklch, var(--hub-sys-color-neutral, #6c757d) 20%, transparent);
+	--hub-ring-indicator: var(--hub-sys-color-primary, #0d6efd);
+	--hub-ring-caption-color: var(--hub-sys-text-primary, #212529);
+	--hub-ring-low-color: var(--hub-sys-color-danger, #dc3545);
+	--hub-ring-high-color: var(--hub-sys-color-success, #198754);
+}
+
+.hub-ring {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: var(--hub-ring-size);
+	block-size: var(--hub-ring-size);
+}
+
+.hub-ring__svg {
+	inline-size: 100%;
+	block-size: 100%;
+	// Rotate so the arc starts at the top and fills clockwise.
+	transform: rotate(-90deg);
+	overflow: visible;
+}
+
+.hub-ring__track,
+.hub-ring__indicator {
+	fill: none;
+	stroke-width: var(--hub-ring-thickness);
+	stroke-linecap: round;
+}
+
+.hub-ring__track {
+	stroke: var(--hub-ring-track);
+}
+
+.hub-ring__indicator {
+	stroke: var(--hub-ring-indicator);
+	transition: stroke-dashoffset 0.4s ease, stroke 0.3s ease;
+}
+
+.hub-ring__caption {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.125rem;
+	color: var(--hub-ring-caption-color);
+	text-align: center;
+	line-height: 1.1;
+	pointer-events: none;
+}
+
+.hub-ring__value {
+	font-size: calc(var(--hub-ring-size) * 0.24);
+	font-weight: var(--hub-ref-font-weight-semibold, 600);
+	font-variant-numeric: tabular-nums;
+}
+
+// ── Threshold bands ─────────────────────────────────────────────────────────
+.hub-ring--low {
+	--hub-ring-indicator: var(--hub-ring-low-color);
+}
+
+.hub-ring--high {
+	--hub-ring-indicator: var(--hub-ring-high-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hub-ring__indicator {
+		transition: none;
+	}
+}

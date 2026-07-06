@@ -1,0 +1,11 @@
+// ── ng-hub-ui-metrics public SCSS API ───────────────────────────────────────
+//
+// Import this file to theme the read-only value visualizations in one call:
+//
+//   @use 'ng-hub-ui-metrics/styles' as hub;
+//
+//   .app-dashboard {
+//     @include hub.hub-metrics-theme($accent: var(--hub-sys-color-brand));
+//   }
+
+@forward 'mixins/metrics-theme';

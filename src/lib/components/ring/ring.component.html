@@ -1,0 +1,19 @@
+<svg class="hub-ring__svg" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+	<circle class="hub-ring__track" cx="50" cy="50" r="44" [attr.pathLength]="PATH_LENGTH" />
+	<circle
+		class="hub-ring__indicator"
+		cx="50"
+		cy="50"
+		r="44"
+		[attr.pathLength]="PATH_LENGTH"
+		[attr.stroke-dasharray]="dashArray()"
+		[attr.stroke-dashoffset]="dashOffset()"
+	/>
+</svg>
+
+<span class="hub-ring__caption">
+	@if (showValue()) {
+		<span class="hub-ring__value">{{ displayValue() }}</span>
+	}
+	<ng-content />
+</span>

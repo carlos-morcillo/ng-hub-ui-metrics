@@ -1,0 +1,61 @@
+// ── hub-meter — graded gauge bar (HTML <meter> semantics) ───────────────────
+//
+// Token contract (declare defaults + consume via var()):
+//   --hub-meter-track-bg     Track background (subtle neutral tint).
+//   --hub-meter-low-bg       Fill for the "below target" band  (danger).
+//   --hub-meter-optimum-bg   Fill for the "on target" band     (success).
+//   --hub-meter-high-bg      Fill for the "above target" band  (warning).
+//   --hub-meter-height       Bar thickness.
+//   --hub-meter-radius       Corner radius of the track and indicator.
+:where(.hub-meter) {
+	--hub-meter-track-bg: color-mix(in oklch, var(--hub-sys-color-neutral, #6c757d) 16%, transparent);
+	--hub-meter-low-bg: var(--hub-sys-color-danger, #dc3545);
+	--hub-meter-optimum-bg: var(--hub-sys-color-success, #198754);
+	--hub-meter-high-bg: var(--hub-sys-color-warning, #ffc107);
+	--hub-meter-height: var(--hub-ref-space-2, 0.5rem);
+	--hub-meter-radius: var(--hub-ref-radius-pill, 50rem);
+	// Fill resolved per-band by the modifier classes below.
+	--hub-meter-fill: var(--hub-meter-optimum-bg);
+}
+
+.hub-meter {
+	display: block;
+	inline-size: 100%;
+}
+
+.hub-meter__track {
+	position: relative;
+	display: block;
+	block-size: var(--hub-meter-height);
+	overflow: hidden;
+	background: var(--hub-meter-track-bg);
+	border-radius: var(--hub-meter-radius);
+}
+
+.hub-meter__indicator {
+	display: block;
+	inline-size: var(--hub-meter-value, 0%);
+	block-size: 100%;
+	background: var(--hub-meter-fill);
+	border-radius: inherit;
+	transition: inline-size 0.3s ease, background-color 0.3s ease;
+}
+
+// ── Band → fill selection ───────────────────────────────────────────────────
+.hub-meter--low {
+	--hub-meter-fill: var(--hub-meter-low-bg);
+}
+
+.hub-meter--optimum {
+	--hub-meter-fill: var(--hub-meter-optimum-bg);
+}
+
+.hub-meter--high {
+	--hub-meter-fill: var(--hub-meter-high-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hub-meter__indicator {
+		transition: none;
+	}
+}

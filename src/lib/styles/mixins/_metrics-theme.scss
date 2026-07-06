@@ -1,0 +1,57 @@
+// ─────────────────────────────────────────────────────────────────────────
+// hub-metrics-theme — one-call theming for the metrics primitives
+// ─────────────────────────────────────────────────────────────────────────
+//
+// Override the shared `--hub-progress-*`, `--hub-meter-*` and `--hub-ring-*`
+// tokens in a single include. Every parameter is OPTIONAL and defaults to
+// `null`: only the parameters you pass are emitted as CSS custom properties, so
+// the rest keep each component's own defaults. Token-based and self-contained
+// (no Bootstrap dependency).
+//
+// `$accent` retints the neutral surfaces shared by all three primitives (the
+// progress indicator and the ring indicator); the graded `$low` / `$optimum` /
+// `$high` slots feed the meter bands and the ring thresholds.
+//
+// @param {Color}  $accent            Shared indicator accent (progress + ring).
+// @param {Color}  $track             Shared track/background surface.
+// @param {Color}  $low               Fill for the "below target" band.
+// @param {Color}  $optimum           Fill for the "on target" band.
+// @param {Color}  $high              Fill for the "above target" band.
+// @param {Length} $radius            Corner radius of the linear tracks.
+//
+// @example
+//
+//   @use 'ng-hub-ui-metrics/styles' as hub;
+//
+//   .app-panel {
+//     @include hub.hub-metrics-theme($accent: var(--hub-sys-color-info), $radius: 0.25rem);
+//   }
+//
+// scss-docs-start hub-metrics-theme
+@mixin hub-metrics-theme($accent: null, $track: null, $low: null, $optimum: null, $high: null, $radius: null) {
+	@if $accent != null {
+		--hub-progress-accent: #{$accent};
+		--hub-ring-indicator: #{$accent};
+	}
+	@if $track != null {
+		--hub-progress-track-bg: #{$track};
+		--hub-meter-track-bg: #{$track};
+		--hub-ring-track: #{$track};
+	}
+	@if $low != null {
+		--hub-meter-low-bg: #{$low};
+		--hub-ring-low-color: #{$low};
+	}
+	@if $optimum != null {
+		--hub-meter-optimum-bg: #{$optimum};
+	}
+	@if $high != null {
+		--hub-meter-high-bg: #{$high};
+		--hub-ring-high-color: #{$high};
+	}
+	@if $radius != null {
+		--hub-progress-radius: #{$radius};
+		--hub-meter-radius: #{$radius};
+	}
+}
+// scss-docs-end hub-metrics-theme

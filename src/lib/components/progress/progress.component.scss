@@ -1,0 +1,95 @@
+// ── hub-progress — linear determinate / indeterminate bar ───────────────────
+//
+// Token contract (declare defaults + consume via var()):
+//   --hub-progress-accent        Local semantic accent (set per-instance in TS).
+//   --hub-progress-track-bg      Track background (subtle tint of the accent).
+//   --hub-progress-indicator-bg  Filled indicator colour (defaults to accent).
+//   --hub-progress-height        Bar thickness.
+//   --hub-progress-radius        Corner radius of the track and indicator.
+:where(.hub-progress) {
+	--hub-progress-accent: var(--hub-sys-color-primary, #0d6efd);
+	--hub-progress-track-bg: color-mix(in oklch, var(--hub-progress-accent) 16%, transparent);
+	--hub-progress-indicator-bg: var(--hub-progress-accent);
+	--hub-progress-height: var(--hub-ref-space-2, 0.5rem);
+	--hub-progress-radius: var(--hub-ref-radius-pill, 50rem);
+}
+
+.hub-progress {
+	display: flex;
+	align-items: center;
+	gap: var(--hub-ref-space-2, 0.5rem);
+	inline-size: 100%;
+}
+
+.hub-progress__label {
+	flex: 0 0 auto;
+	color: var(--hub-sys-text-muted, #6c757d);
+	font-size: var(--hub-ref-font-size-sm, 0.875rem);
+}
+
+.hub-progress__track {
+	position: relative;
+	flex: 1 1 auto;
+	block-size: var(--hub-progress-height);
+	overflow: hidden;
+	background: var(--hub-progress-track-bg);
+	border-radius: var(--hub-progress-radius);
+}
+
+.hub-progress__indicator {
+	display: block;
+	inline-size: var(--hub-progress-value, 0%);
+	block-size: 100%;
+	background: var(--hub-progress-indicator-bg);
+	border-radius: inherit;
+	transition: inline-size 0.3s ease;
+}
+
+.hub-progress__value {
+	flex: 0 0 auto;
+	min-inline-size: 3ch;
+	color: var(--hub-sys-text-primary, #212529);
+	font-size: var(--hub-ref-font-size-sm, 0.875rem);
+	font-weight: var(--hub-ref-font-weight-semibold, 600);
+	text-align: end;
+	font-variant-numeric: tabular-nums;
+}
+
+// ── Size scale ──────────────────────────────────────────────────────────────
+.hub-progress--sm {
+	--hub-progress-height: var(--hub-ref-space-1, 0.25rem);
+}
+
+.hub-progress--md {
+	--hub-progress-height: var(--hub-ref-space-2, 0.5rem);
+}
+
+.hub-progress--lg {
+	--hub-progress-height: var(--hub-ref-space-3, 0.75rem);
+}
+
+// ── Indeterminate loop ──────────────────────────────────────────────────────
+.hub-progress--indeterminate .hub-progress__indicator {
+	inline-size: 40%;
+	transition: none;
+	animation: hub-progress-indeterminate 1.4s ease-in-out infinite;
+}
+
+@keyframes hub-progress-indeterminate {
+	0% {
+		transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(300%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hub-progress--indeterminate .hub-progress__indicator {
+		animation-duration: 3s;
+	}
+
+	.hub-progress__indicator {
+		transition: none;
+	}
+}

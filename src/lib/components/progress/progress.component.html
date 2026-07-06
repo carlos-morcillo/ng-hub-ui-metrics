@@ -1,0 +1,11 @@
+@if (label()) {
+	<span class="hub-progress__label">{{ label() }}</span>
+}
+
+<span class="hub-progress__track">
+	<span class="hub-progress__indicator"></span>
+</span>
+
+@if (showValue() && !indeterminate()) {
+	<span class="hub-progress__value">{{ displayValue() }}</span>
+}
