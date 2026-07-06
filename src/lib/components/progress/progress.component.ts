@@ -41,8 +41,13 @@ export class HubProgressComponent {
 	/** Renders a looping bar for work of unknown duration; drops `aria-valuenow`. */
 	readonly indeterminate = input(false, { transform: booleanAttribute });
 
-	/** Semantic accent driving the indicator colour. */
-	readonly color = input<HubMetricsColor>('primary');
+	/**
+	 * Optional semantic accent driving the indicator colour. When set it maps to
+	 * `--hub-sys-color-<color>` and is applied inline (a per-instance override);
+	 * when omitted the accent falls back to the `--hub-progress-accent` token, so a
+	 * theme (`hub-metrics-theme` mixin / ancestor override) can drive it instead.
+	 */
+	readonly color = input<HubMetricsColor | undefined>(undefined);
 
 	/** Size token controlling the bar thickness. */
 	readonly size = input<HubProgressSize>('md');
@@ -80,10 +85,15 @@ export class HubProgressComponent {
 	/** `aria-valuenow`, omitted (null) while the bar is {@link indeterminate}. */
 	protected readonly ariaValueNow = computed(() => (this.indeterminate() ? null : this.clampedValue()));
 
-	/** Local accent slot resolved from the semantic {@link color} input. */
-	protected readonly accentVar = computed(
-		() => `var(--hub-sys-color-${this.color()}, var(--hub-sys-color-primary, #0d6efd))`
-	);
+	/**
+	 * Local accent slot resolved from the semantic {@link color} input, or `null`
+	 * when no colour is set so the inline binding is dropped and the
+	 * `--hub-progress-accent` token (default or theme override) takes over.
+	 */
+	protected readonly accentVar = computed(() => {
+		const color = this.color();
+		return color ? `var(--hub-sys-color-${color}, var(--hub-sys-color-primary, #0d6efd))` : null;
+	});
 
 	/** Host modifier classes derived from the signal inputs. */
 	protected readonly hostClasses = computed(() =>

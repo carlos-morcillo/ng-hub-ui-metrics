@@ -26,7 +26,7 @@ import { HubRingBand, HubRingThresholds } from './ring.types';
 	encapsulation: ViewEncapsulation.None,
 	host: {
 		class: 'hub-ring',
-		role: 'img',
+		role: 'meter',
 		'[class]': 'hostClasses()',
 		'[style.--hub-ring-size]': 'sizeCss()',
 		'[style.--hub-ring-thickness]': 'thicknessCss()',

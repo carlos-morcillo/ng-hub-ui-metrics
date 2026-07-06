@@ -107,7 +107,7 @@ Barra de progreso determinada o indeterminada. Rol de host `progressbar`.
 | `value` | `number` | `0` | Valor actual en la escala `[0, max]`. |
 | `max` | `number` | `100` | Límite superior de la escala. |
 | `indeterminate` | `boolean` | `false` | Anima la barra y omite `aria-valuenow`. |
-| `color` | `HubMetricsColor` | `'primary'` | Acento semántico (`primary`, `success`, `neutral`, …). |
+| `color` | `HubMetricsColor \| undefined` | `undefined` | Acento semántico opcional (`primary`, `success`, `neutral`, …); se aplica inline cuando se define. Omítelo para que un tema (mixin / override de token) mande el acento — por defecto es `primary`. |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Grosor de la barra. |
 | `showValue` | `boolean` | `false` | Muestra el porcentaje redondeado. |
 | `label` | `string` | `''` | Etiqueta accesible (`aria-label`) y rótulo inicial. |
@@ -132,7 +132,7 @@ asigna a `--hub-meter-low-bg` / `--hub-meter-optimum-bg` / `--hub-meter-high-bg`
 ### `<hub-ring>` — gauge circular (alias `hubGauge`)
 
 Una puntuación normalizada dibujada como arco SVG, con un rótulo central
-opcional proyectado mediante `<ng-content>`. Rol de host `img`.
+opcional proyectado mediante `<ng-content>`. Rol de host `meter`.
 
 | Entrada | Tipo | Por defecto | Descripción |
 |---|---|---|---|
@@ -147,8 +147,14 @@ opcional proyectado mediante `<ng-content>`. Rol de host `img`.
 
 ## 🎨 Estilos
 
-Cada detalle visual es una propiedad personalizada CSS `--hub-*`. Defínelas en el
-host, en cualquier ancestro o en `:root`.
+Cada detalle visual es una propiedad personalizada CSS `--hub-*`. Cada componente
+declara sus valores por defecto en su propio elemento (`:where(.hub-progress)` /
+`:where(.hub-meter)` / `:where(.hub-ring)`), así que un valor puesto **en el elemento**
+gana al heredado de un ancestro pelado. Define los tokens en el elemento del componente,
+o en un wrapper que *apunte a los componentes como descendientes*
+(`.wrapper :where(.hub-ring) { … }`) — que es justo lo que emite el mixin
+`hub-metrics-theme()`. Para `<hub-progress>` prefiere el input `color` por instancia
+para tintes semánticos puntuales.
 
 ### `hub-progress`
 

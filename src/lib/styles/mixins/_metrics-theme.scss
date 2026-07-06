@@ -29,29 +29,37 @@
 //
 // scss-docs-start hub-metrics-theme
 @mixin hub-metrics-theme($accent: null, $track: null, $low: null, $optimum: null, $high: null, $radius: null) {
-	@if $accent != null {
-		--hub-progress-accent: #{$accent};
-		--hub-ring-indicator: #{$accent};
-	}
-	@if $track != null {
-		--hub-progress-track-bg: #{$track};
-		--hub-meter-track-bg: #{$track};
-		--hub-ring-track: #{$track};
-	}
-	@if $low != null {
-		--hub-meter-low-bg: #{$low};
-		--hub-ring-low-color: #{$low};
-	}
-	@if $optimum != null {
-		--hub-meter-optimum-bg: #{$optimum};
-	}
-	@if $high != null {
-		--hub-meter-high-bg: #{$high};
-		--hub-ring-high-color: #{$high};
-	}
-	@if $radius != null {
-		--hub-progress-radius: #{$radius};
-		--hub-meter-radius: #{$radius};
+	// Emit the token overrides ON the metrics elements as descendants of the include
+	// scope (a wrapper such as `.app-dashboard`), NOT on the scope itself. Each
+	// component declares its own defaults on `:where(.hub-<comp>)`, and a custom
+	// property set on the element wins over one inherited from an ancestor — so a
+	// bare wrapper override would be shadowed. `<scope> :where(.hub-*)` (specificity
+	// 0,1,0) beats `:where(.hub-*)` (0,0,0) and reaches the element.
+	& :where(.hub-progress, .hub-meter, .hub-ring) {
+		@if $accent != null {
+			--hub-progress-accent: #{$accent};
+			--hub-ring-indicator: #{$accent};
+		}
+		@if $track != null {
+			--hub-progress-track-bg: #{$track};
+			--hub-meter-track-bg: #{$track};
+			--hub-ring-track: #{$track};
+		}
+		@if $low != null {
+			--hub-meter-low-bg: #{$low};
+			--hub-ring-low-color: #{$low};
+		}
+		@if $optimum != null {
+			--hub-meter-optimum-bg: #{$optimum};
+		}
+		@if $high != null {
+			--hub-meter-high-bg: #{$high};
+			--hub-ring-high-color: #{$high};
+		}
+		@if $radius != null {
+			--hub-progress-radius: #{$radius};
+			--hub-meter-radius: #{$radius};
+		}
 	}
 }
 // scss-docs-end hub-metrics-theme

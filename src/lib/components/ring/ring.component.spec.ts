@@ -27,10 +27,10 @@ describe('HubRingComponent', () => {
 		return { host, indicator: host.querySelector('.hub-ring__indicator') as SVGCircleElement };
 	}
 
-	it('renders as an image with the ARIA value contract', () => {
+	it('renders as a meter with the ARIA value contract', () => {
 		const { host } = render();
 
-		expect(host.getAttribute('role')).toBe('img');
+		expect(host.getAttribute('role')).toBe('meter');
 		expect(host.getAttribute('aria-valuemin')).toBe('0');
 		expect(host.getAttribute('aria-valuemax')).toBe('1');
 		expect(host.getAttribute('aria-valuenow')).toBe('0.5');

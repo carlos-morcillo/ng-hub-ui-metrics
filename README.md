@@ -106,7 +106,7 @@ A determinate or indeterminate progress bar. Host role `progressbar`.
 | `value` | `number` | `0` | Current value on the `[0, max]` scale. |
 | `max` | `number` | `100` | Upper bound of the scale. |
 | `indeterminate` | `boolean` | `false` | Loops the bar and drops `aria-valuenow`. |
-| `color` | `HubMetricsColor` | `'primary'` | Semantic accent (`primary`, `success`, `neutral`, …). |
+| `color` | `HubMetricsColor \| undefined` | `undefined` | Optional semantic accent (`primary`, `success`, `neutral`, …); applied inline when set. Omit to let a theme (mixin / token override) drive the accent — it defaults to `primary`. |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Bar thickness. |
 | `showValue` | `boolean` | `false` | Render the rounded percentage. |
 | `label` | `string` | `''` | Accessible label (`aria-label`) and leading caption. |
@@ -131,7 +131,7 @@ maps to `--hub-meter-low-bg` / `--hub-meter-optimum-bg` / `--hub-meter-high-bg`.
 ### `<hub-ring>` — circular gauge (alias `hubGauge`)
 
 A normalized score drawn as an SVG arc, with an optional centre caption
-projected via `<ng-content>`. Host role `img`.
+projected via `<ng-content>`. Host role `meter`.
 
 | Input | Type | Default | Description |
 |---|---|---|---|
@@ -146,8 +146,13 @@ projected via `<ng-content>`. Host role `img`.
 
 ## 🎨 Styling
 
-Every visual detail is a `--hub-*` CSS custom property. Set them on the host,
-on any ancestor, or in `:root`.
+Every visual detail is a `--hub-*` CSS custom property. Each component declares
+its defaults on its own element (`:where(.hub-progress)` / `:where(.hub-meter)` /
+`:where(.hub-ring)`), so a value set **on the element** wins over one inherited
+from a bare ancestor. Set the tokens on the component element, or on a wrapper that
+*targets the components as descendants* (`.wrapper :where(.hub-ring) { … }`) — which
+is exactly what the `hub-metrics-theme()` mixin emits. For `<hub-progress>` prefer the
+per-instance `color` input for one-off semantic tints.
 
 ### `hub-progress`
 

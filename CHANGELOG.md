@@ -1,5 +1,20 @@
 # Changelog
 
+## [22.0.1] - 2026-07-06
+
+### Fixed
+
+- **Wrapper / mixin theming now actually retints the primitives.** Each component declares its token defaults on its own element (`:where(.hub-progress)` / `:where(.hub-meter)` / `:where(.hub-ring)`), and a custom property set on the element wins over one inherited from an ancestor — so a bare `.wrapper { --hub-*: … }` override, and the `hub-metrics-theme()` mixin that emitted such overrides, had no effect. The mixin now emits its token overrides ON the metrics elements as descendants of the include scope (`<scope> :where(.hub-progress, .hub-meter, .hub-ring)`), which beats the per-element defaults and reaches the components.
+- **`<hub-ring>` host role corrected to `meter`** (was `img`, which does not expose the `aria-valuemin` / `-valuemax` / `-valuenow` / `-valuetext` attributes the component sets).
+
+### Changed
+
+- **`<hub-progress>` `color` input is now optional** (`HubMetricsColor | undefined`, default `undefined`). When set it is applied inline as a per-instance override; when omitted the accent falls back to the `--hub-progress-accent` token so a theme (mixin / token override) can drive it. The rendered default is unchanged (`primary`).
+
+### Added
+
+- `docs/css-variables-reference.md` — complete CSS custom-property reference for `<hub-progress>`, `<hub-meter>` and `<hub-ring>`, with the theming guidance above.
+
 ## [22.0.0] - 2026-07-05
 
 ### Added
