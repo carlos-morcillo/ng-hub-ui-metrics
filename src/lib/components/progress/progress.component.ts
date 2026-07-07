@@ -1,5 +1,6 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { HubMetricsColor } from '../../models/metrics.types';
+import { resolveHubAccent } from '../../shared/resolve-hub-accent';
 import { HubProgressSize } from './progress.types';
 
 /**
@@ -42,10 +43,13 @@ export class HubProgressComponent {
 	readonly indeterminate = input(false, { transform: booleanAttribute });
 
 	/**
-	 * Optional semantic accent driving the indicator colour. When set it maps to
-	 * `--hub-sys-color-<color>` and is applied inline (a per-instance override);
-	 * when omitted the accent falls back to the `--hub-progress-accent` token, so a
-	 * theme (`hub-metrics-theme` mixin / ancestor override) can drive it instead.
+	 * Optional accent driving the indicator colour. Accepts any colour: a bareword
+	 * (semantic name, registered accent or CSS named colour) maps to
+	 * `--hub-sys-color-<color>` with the word itself as the raw fallback, while a
+	 * literal (`#hex`, `rgb()`, `oklch()`, `var()`…) is passed through unchanged.
+	 * The resolved value is applied inline (a per-instance override); when omitted
+	 * the accent falls back to the `--hub-progress-accent` token, so a theme
+	 * (`hub-metrics-theme` mixin / ancestor override) can drive it instead.
 	 */
 	readonly color = input<HubMetricsColor | undefined>(undefined);
 
@@ -86,14 +90,14 @@ export class HubProgressComponent {
 	protected readonly ariaValueNow = computed(() => (this.indeterminate() ? null : this.clampedValue()));
 
 	/**
-	 * Local accent slot resolved from the semantic {@link color} input, or `null`
-	 * when no colour is set so the inline binding is dropped and the
-	 * `--hub-progress-accent` token (default or theme override) takes over.
+	 * Local accent slot resolved from the {@link color} input. A bareword resolves
+	 * to `var(--hub-sys-color-<color>, <color>)` — the ds token with the word as a
+	 * raw fallback — while a literal colour (`#hex`, `rgb()`, `oklch()`, `var()`…)
+	 * is passed through unchanged. Returns `null` when no colour is set so the
+	 * inline binding is dropped and the `--hub-progress-accent` token (default or
+	 * theme override) takes over.
 	 */
-	protected readonly accentVar = computed(() => {
-		const color = this.color();
-		return color ? `var(--hub-sys-color-${color}, var(--hub-sys-color-primary, #0d6efd))` : null;
-	});
+	protected readonly accentVar = computed(() => resolveHubAccent(this.color()));
 
 	/** Host modifier classes derived from the signal inputs. */
 	protected readonly hostClasses = computed(() =>

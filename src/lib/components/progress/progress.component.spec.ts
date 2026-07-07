@@ -42,9 +42,29 @@ describe('HubProgressComponent', () => {
 		expect(el.getAttribute('aria-label')).toBe('Upload');
 		expect(el.className).toContain('hub-progress--lg');
 		expect(el.style.getPropertyValue('--hub-progress-value')).toBe('25%');
-		expect(el.style.getPropertyValue('--hub-progress-accent')).toBe(
-			'var(--hub-sys-color-success, var(--hub-sys-color-primary, #0d6efd))'
+		expect(el.style.getPropertyValue('--hub-progress-accent')).toBe('var(--hub-sys-color-success, success)');
+	});
+
+	it('resolves a semantic colour to the ds token with a raw fallback', async () => {
+		const fixture = await TestBed.configureTestingModule({ imports: [HostProgressComponent] }).createComponent(
+			HostProgressComponent
 		);
+		fixture.componentInstance.color = 'primary';
+		fixture.detectChanges();
+		const el: HTMLElement = fixture.nativeElement.querySelector('hub-progress');
+
+		expect(el.style.getPropertyValue('--hub-progress-accent')).toBe('var(--hub-sys-color-primary, primary)');
+	});
+
+	it('passes a literal colour value through unchanged', async () => {
+		const fixture = await TestBed.configureTestingModule({ imports: [HostProgressComponent] }).createComponent(
+			HostProgressComponent
+		);
+		fixture.componentInstance.color = '#ff0000';
+		fixture.detectChanges();
+		const el: HTMLElement = fixture.nativeElement.querySelector('hub-progress');
+
+		expect(el.style.getPropertyValue('--hub-progress-accent')).toBe('#ff0000');
 	});
 
 	it('clamps an out-of-range value to the max', async () => {
