@@ -1,5 +1,11 @@
 # Changelog
 
+## [22.2.1] - 2026-07-28
+
+### Fixed
+
+- **The package could not be published**: `tsconfig.lib.prod.json` was missing `"compilationMode": "partial"`, so production builds emitted full Ivy output, which npm publishing rejects. 22.2.0 never reached the registry; this release carries the 22.2.0 changes (canonical `resolveHubAccent` from ng-hub-ui-utils) plus the build fix.
+
 ## [22.2.0] - 2026-07-28
 
 ### Changed
