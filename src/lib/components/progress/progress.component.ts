@@ -1,6 +1,6 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, ViewEncapsulation } from '@angular/core';
 import { HubMetricsColor } from '../../models/metrics.types';
-import { resolveHubAccent } from '../../shared/resolve-hub-accent';
+import { resolveHubAccent } from 'ng-hub-ui-utils';
 import { HubProgressSize } from './progress.types';
 
 /**
