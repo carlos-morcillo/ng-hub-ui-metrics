@@ -1,6 +1,6 @@
 {
   "name": "ng-hub-ui-metrics",
-  "version": "22.1.0",
+  "version": "22.2.0",
   "description": "Read-only value visualizations (progress, meter, gauge/ring) for Angular 21+, part of the ng-hub-ui family.",
   "author": "Carlos Morcillo <carlos.morcillo@me.com> (https://www.carlosmorcillo.com)",
   "repository": {
@@ -26,7 +26,8 @@
   ],
   "peerDependencies": {
     "@angular/common": ">=21.0.0",
-    "@angular/core": ">=21.0.0"
+    "@angular/core": ">=21.0.0",
+    "ng-hub-ui-utils": ">=22.7.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
