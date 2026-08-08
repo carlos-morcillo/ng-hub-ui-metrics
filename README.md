@@ -10,11 +10,11 @@ Read-only value visualizations for Angular 21+ — a linear **progress** bar, a 
 
 ## Documentation and Live Examples
 
-This package is part of [Hub UI](https://hubui.dev/), a collection of Angular component libraries for standalone apps.
+This package is part of [Hub UI](https://hubui.dev/en/), a collection of Angular component libraries for standalone apps.
 
-- Docs: https://hubui.dev/metrics/overview/
-- Live examples: https://hubui.dev/metrics/examples/
-- Hub UI: https://hubui.dev/
+- Docs: https://hubui.dev/en/metrics/overview/
+- Live examples: https://hubui.dev/en/metrics/examples/
+- Hub UI: https://hubui.dev/en/
 
 ## 🧩 Library Family `ng-hub-ui`
 

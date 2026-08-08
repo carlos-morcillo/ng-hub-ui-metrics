@@ -10,11 +10,11 @@ Visualizaciones de valores de solo lectura para Angular 21+ — una barra de **p
 
 ## Documentación y ejemplos en vivo
 
-Este paquete forma parte de [Hub UI](https://hubui.dev/), una colección de librerías de componentes de Angular para aplicaciones standalone.
+Este paquete forma parte de [Hub UI](https://hubui.dev/en/), una colección de librerías de componentes de Angular para aplicaciones standalone.
 
-- Documentación: https://hubui.dev/metrics/overview/
-- Ejemplos en vivo: https://hubui.dev/metrics/examples/
-- Hub UI: https://hubui.dev/
+- Documentación: https://hubui.dev/en/metrics/overview/
+- Ejemplos en vivo: https://hubui.dev/en/metrics/examples/
+- Hub UI: https://hubui.dev/en/
 
 ## 🧩 Familia de librerías `ng-hub-ui`
 
