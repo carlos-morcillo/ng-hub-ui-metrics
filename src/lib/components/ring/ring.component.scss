@@ -48,7 +48,9 @@
 
 .hub-ring__indicator {
 	stroke: var(--hub-ring-indicator);
-	transition: stroke-dashoffset 0.4s ease, stroke 0.3s ease;
+	transition:
+		stroke-dashoffset 0.4s ease,
+		stroke 0.3s ease;
 }
 
 .hub-ring__caption {

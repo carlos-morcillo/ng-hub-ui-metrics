@@ -38,7 +38,9 @@
 	block-size: 100%;
 	background: var(--hub-meter-fill);
 	border-radius: inherit;
-	transition: inline-size 0.3s ease, background-color 0.3s ease;
+	transition:
+		inline-size 0.3s ease,
+		background-color 0.3s ease;
 }
 
 // ── Band → fill selection ───────────────────────────────────────────────────
