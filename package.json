@@ -1,6 +1,6 @@
 {
 	"name": "ng-hub-ui-metrics",
-	"version": "22.2.3",
+	"version": "22.2.4",
 	"license": "MIT",
 	"description": "Read-only value visualizations (progress, meter, gauge/ring) for Angular 21+, part of the ng-hub-ui family.",
 	"author": "Carlos Morcillo <carlos.morcillo@me.com> (https://www.carlosmorcillo.com)",
@@ -12,7 +12,7 @@
 		"url": "https://github.com/carlos-morcillo/ng-hub-ui-metrics/issues",
 		"email": "carlos.morcillo@me.com"
 	},
-	"homepage": "https://hubui.dev/",
+	"homepage": "https://hubui.dev/en/metrics/overview/",
 	"keywords": [
 		"angular",
 		"progress",
