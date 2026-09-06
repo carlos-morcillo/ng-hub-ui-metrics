@@ -5,7 +5,15 @@ import { HubMeterComponent } from './meter.component';
 @Component({
 	standalone: true,
 	imports: [HubMeterComponent],
-	template: `<hub-meter [value]="value" [min]="min" [max]="max" [low]="low" [high]="high" [optimum]="optimum" />`
+	template: `<hub-meter
+		[value]="value"
+		[min]="min"
+		[max]="max"
+		[low]="low"
+		[high]="high"
+		[optimum]="optimum"
+		[label]="label"
+	/>`
 })
 class HostMeterComponent {
 	value = 0.5;
@@ -14,6 +22,7 @@ class HostMeterComponent {
 	low: number | undefined = 0.3;
 	high: number | undefined = 0.7;
 	optimum: number | undefined = 0.9;
+	label = '';
 }
 
 describe('HubMeterComponent', () => {
@@ -55,6 +64,18 @@ describe('HubMeterComponent', () => {
 
 		expect(el.getAttribute('data-band')).toBe('high');
 		expect(el.className).toContain('hub-meter--high');
+	});
+
+	it('names the meter from the consumer label', async () => {
+		const el = await render({ label: 'Disk usage' });
+
+		expect(el.getAttribute('aria-label')).toBe('Disk usage');
+	});
+
+	it('leaves aria-label off when no label is given, so an outer name still applies', async () => {
+		const el = await render();
+
+		expect(el.getAttribute('aria-label')).toBeNull();
 	});
 
 	it('guards a degenerate range without dividing by zero', async () => {

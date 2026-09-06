@@ -27,7 +27,8 @@ import { HubMeterBand, HubMeterResolved } from './meter.types';
 		'[attr.aria-valuemin]': 'resolved().min',
 		'[attr.aria-valuemax]': 'resolved().max',
 		'[attr.aria-valuenow]': 'resolved().value',
-		'[attr.aria-valuetext]': 'valueText()'
+		'[attr.aria-valuetext]': 'valueText()',
+		'[attr.aria-label]': 'label() || null'
 	}
 })
 export class HubMeterComponent {
@@ -48,6 +49,13 @@ export class HubMeterComponent {
 
 	/** Preferred point of the range; defaults to the midpoint when omitted. */
 	readonly optimum = input<number | undefined>(undefined);
+
+	/**
+	 * Accessible label describing what is being measured. `role="meter"` takes its
+	 * name from the author only, so without it the gauge reaches assistive
+	 * technology unnamed — the component renders no text of its own.
+	 */
+	readonly label = input<string>('');
 
 	/** Fully resolved, clamped bounds derived from the raw inputs. */
 	protected readonly resolved = computed<HubMeterResolved>(() => {

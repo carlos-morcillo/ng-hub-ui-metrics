@@ -90,9 +90,10 @@ The band the value falls in (`low` / `optimum` / `high`) picks the matching `-bg
 | `--hub-ring-low-color` | `var(--hub-sys-color-danger, #dc3545)` |
 | `--hub-ring-high-color` | `var(--hub-sys-color-success, #198754)` |
 
-`--hub-ring-size` and `--hub-ring-thickness` also accept the `size` / `thickness` inputs
-(applied inline per instance); the optional `thresholds` input recolours the indicator
-through `--hub-ring-low-color` / `--hub-ring-high-color`.
+`--hub-ring-size` and `--hub-ring-thickness` also accept the `size` / `thickness` inputs,
+applied inline per instance **only when set** — leave an input out and the token stays in
+charge. The optional `thresholds` input recolours the indicator through
+`--hub-ring-low-color` / `--hub-ring-high-color`.
 
 ---
 

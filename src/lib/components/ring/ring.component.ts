@@ -9,11 +9,12 @@ import { HubRingBand, HubRingThresholds } from './ring.types';
  * over a `pathLength`-normalized circle, so the offset maps linearly to the
  * completion (100 at 0%, 0 at 100%). Optional {@link thresholds} recolour the
  * indicator through the `--hub-ring-low-color` / `--hub-ring-high-color` tokens;
- * a centred caption is projected through `<ng-content>`.
+ * a centred caption is projected through `<ng-content>`. That caption is decoration:
+ * `role="meter"` is named by the author, so pass {@link label} to name the gauge.
  *
  * @example
  * ```html
- * <hub-ring [value]="0.82" [thresholds]="{ low: 0.4, high: 0.75 }">Score</hub-ring>
+ * <hub-ring [value]="0.82" [thresholds]="{ low: 0.4, high: 0.75 }" label="Quality score">Score</hub-ring>
  * ```
  */
 @Component({
@@ -34,7 +35,7 @@ import { HubRingBand, HubRingThresholds } from './ring.types';
 		'[attr.aria-valuemax]': 'max()',
 		'[attr.aria-valuenow]': 'value()',
 		'[attr.aria-valuetext]': 'displayValue()',
-		'[attr.aria-label]': 'displayValue()'
+		'[attr.aria-label]': 'label() || null'
 	}
 })
 export class HubRingComponent {
@@ -44,17 +45,32 @@ export class HubRingComponent {
 	/** Upper bound the {@link value} is normalized against. */
 	readonly max = input<number>(1);
 
-	/** Outer diameter of the ring (number → px, or any CSS length string). */
-	readonly size = input<number | string>('4rem');
+	/**
+	 * Outer diameter of the ring (number → px, or any CSS length string), applied
+	 * inline as a per-instance override. Omit it to let the `--hub-ring-size`
+	 * token (default or theme override) drive the diameter.
+	 */
+	readonly size = input<number | string | undefined>(undefined);
 
-	/** Stroke width of the ring (number → px, or any CSS length string). */
-	readonly thickness = input<number | string>('0.5rem');
+	/**
+	 * Stroke width of the ring (number → px, or any CSS length string), applied
+	 * inline as a per-instance override. Omit it to let the
+	 * `--hub-ring-thickness` token (default or theme override) drive the stroke.
+	 */
+	readonly thickness = input<number | string | undefined>(undefined);
 
 	/** Optional colour thresholds recolouring the indicator by band. */
 	readonly thresholds = input<HubRingThresholds | undefined>(undefined);
 
 	/** Whether the rounded percentage is rendered in the centre. */
 	readonly showValue = input(true, { transform: booleanAttribute });
+
+	/**
+	 * Accessible label describing what the ring scores. `role="meter"` takes its
+	 * name from the author only, so neither the projected caption nor the centred
+	 * percentage can name the gauge — this input is the only way to do it.
+	 */
+	readonly label = input<string>('');
 
 	/** Total normalized path length of the SVG circle (see `pathLength`). */
 	protected readonly PATH_LENGTH = 100;
@@ -105,8 +121,15 @@ export class HubRingComponent {
 	/** Stroke thickness as a CSS length (numbers are treated as pixels). */
 	protected readonly thicknessCss = computed(() => this.toCssLength(this.thickness()));
 
-	/** Normalizes a number|string dimension into a CSS length string. */
-	private toCssLength(dimension: number | string): string {
+	/**
+	 * Normalizes a number|string dimension into a CSS length string, returning
+	 * `null` when the input is unset so the inline binding is dropped altogether
+	 * and the stylesheet token wins the cascade instead of being shadowed.
+	 */
+	private toCssLength(dimension: number | string | undefined): string | null {
+		if (dimension === undefined) {
+			return null;
+		}
 		return typeof dimension === 'number' ? `${dimension}px` : dimension;
 	}
 }

@@ -7,7 +7,7 @@
  * keeps the neutral `--hub-ring-indicator` colour.
  */
 export interface HubRingThresholds {
-	/** Value at or below which the ring is treated as "low". */
+	/** Value strictly below which the ring is treated as "low"; `low` itself is not. */
 	low?: number;
 	/** Value at or above which the ring is treated as "high". */
 	high?: number;

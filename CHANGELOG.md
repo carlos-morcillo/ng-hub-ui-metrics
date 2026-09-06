@@ -1,5 +1,20 @@
 # Changelog
 
+## [22.3.0] - 2026-09-06
+
+### Added
+
+- **`<hub-meter>` and `<hub-ring>` accept a `label` input**, mirroring `<hub-progress>`. `role="meter"` is named by the author alone — the meter renders no text of its own and the ring's projected caption is not a name — so both primitives reached assistive technology unnamed, and the ring could not even be named from outside. The input feeds `aria-label` through a host binding and is dropped when empty, so an outer `aria-labelledby` still applies. An `aria-label` written on the element itself does not: a host binding owns the attribute, so it is cleared whenever `label` is unset. See `BREAKING_CHANGES.md`.
+- **`FUNCTIONALITIES.md`**, the coverage table the rest of the family ships. Nothing stated which parts of the three primitives a live example actually demonstrates and which are only described in prose, so a reader had to open the docs site and infer it.
+
+### Fixed
+
+- **`<hub-ring>` no longer takes its accessible name from its own percentage.** `aria-label` was hard-wired to the rounded value already carried by `aria-valuetext`, which announced the number twice and overwrote any name written on the element. The name now comes from the new `label` input; the percentage stays in `aria-valuetext`.
+- **`<hub-ring>` `size` and `thickness` no longer shadow their own tokens.** Both defaulted to a concrete length written inline as a custom property on every render, so `--hub-ring-size` and `--hub-ring-thickness` — advertised as themeable by the README, the CSS reference and the ds token spec — could only be overridden with `!important`, and not even the `hub-metrics-theme()` mixin reached them. The inputs now default to `undefined` (their type widens accordingly) and the inline declaration is dropped when unset, leaving the stylesheet in charge: `4rem` and `var(--hub-ref-space-2, 0.5rem)`, the same values as before. Same shape as the 22.0.1 fix for `<hub-progress>`'s `color`.
+- **The README no longer advertises "zero external dependencies".** `ng-hub-ui-utils` has been a required peer since 22.2.0 — `<hub-progress>` imports `resolveHubAccent` from it — so anyone who followed the Quick Start installed a tree that cannot resolve. Both READMEs now state the dependency and the install command names it.
+- **The `<hub-progress>` token table lists `--hub-progress-accent`.** It is the root slot the `color` input and the mixin's `$accent` write, and the one every other progress token derives from, yet it was the single token the table left out — so a theme author reading only the README could not see what to override.
+- **`HubRingThresholds.low` described itself as inclusive** ("at or below") while the component treats a value equal to `low` as neutral. The JSDoc ships in the `.d.ts`, so the wrong sentence is what a consumer reads in their editor.
+
 ## [22.2.4] - 2026-09-01
 
 ### Changed
@@ -36,7 +51,7 @@
 
 ### Added
 
-- **NEW peer dependency: `ng-hub-ui-utils` `>=22.7.0`.** Consumers must have `ng-hub-ui-utils` installed alongside this library (it is where `resolveHubAccent` lives). Users installing via `ng add ng-hub-ui-installer` get it automatically; manual installs need `npm i ng-hub-ui-utils`.
+- **NEW peer dependency: `ng-hub-ui-utils` `>=22.7.0`.** Consumers must have `ng-hub-ui-utils` installed alongside this library (it is where `resolveHubAccent` lives). Users installing via `ng add ng-hub-ui` get it automatically; manual installs need `npm i ng-hub-ui-utils`.
 
 ## [22.1.0] - 2026-07-07
 

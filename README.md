@@ -6,7 +6,7 @@
 [![Angular](https://img.shields.io/badge/Angular-21%2B-red.svg)](https://angular.dev)
 [![License](https://img.shields.io/npm/l/ng-hub-ui-metrics.svg)](LICENSE)
 
-Read-only value visualizations for Angular 21+ — a linear **progress** bar, a graded **meter** gauge and a circular **ring** (gauge) — bundled into a single standalone, signal-driven library. Zero external dependencies; every colour and dimension is a `--hub-*` CSS custom property derived from the shared design-system tokens.
+Read-only value visualizations for Angular 21+ — a linear **progress** bar, a graded **meter** gauge and a circular **ring** (gauge) — bundled into a single standalone, signal-driven library. Its only runtime dependency is `ng-hub-ui-utils` (a required peer, where the shared accent resolver lives); every colour and dimension is a `--hub-*` CSS custom property derived from the shared design-system tokens.
 
 ## Documentation and Live Examples
 
@@ -49,8 +49,13 @@ This library is part of the **ng-hub-ui** ecosystem:
 ### 1. Install
 
 ```bash
-npm install ng-hub-ui-metrics
+npm install ng-hub-ui-metrics ng-hub-ui-utils
 ```
+
+> **`ng-hub-ui-utils` is a required peer dependency** (`>=22.7.0`): `<hub-progress>`
+> resolves its `color` input through the shared `resolveHubAccent` helper that lives
+> there. Installing `ng-hub-ui-metrics` alone leaves an unresolved import. `ng add ng-hub-ui`
+> pulls it in for you.
 
 > **Theming (recommended):** install the shared design tokens so the metrics —
 > and every other ng-hub-ui library — read the same palette and dark-mode colours:
@@ -124,6 +129,7 @@ the value falls in. Host role `meter`.
 | `low` | `number \| undefined` | `undefined` | Upper limit of the "low" region (defaults to `min`). |
 | `high` | `number \| undefined` | `undefined` | Lower limit of the "high" region (defaults to `max`). |
 | `optimum` | `number \| undefined` | `undefined` | Preferred point (defaults to the midpoint). |
+| `label` | `string` | `''` | Accessible label (`aria-label`). `role="meter"` is named by the author only, so set it. |
 
 The computed band is exposed as `data-band` (`low` / `optimum` / `high`) and
 maps to `--hub-meter-low-bg` / `--hub-meter-optimum-bg` / `--hub-meter-high-bg`.
@@ -137,10 +143,11 @@ projected via `<ng-content>`. Host role `meter`.
 |---|---|---|---|
 | `value` | `number` | `0` | Score as a `0..1` ratio or a `0..max` figure. |
 | `max` | `number` | `1` | Value is normalized against this. |
-| `size` | `number \| string` | `'4rem'` | Outer diameter (number → px). |
-| `thickness` | `number \| string` | `'0.5rem'` | Stroke width (number → px). |
+| `size` | `number \| string \| undefined` | `undefined` | Outer diameter (number → px), applied inline when set. Omit it to let the `--hub-ring-size` token drive the diameter — it defaults to `4rem`. |
+| `thickness` | `number \| string \| undefined` | `undefined` | Stroke width (number → px), applied inline when set. Omit it to let the `--hub-ring-thickness` token drive the stroke — it defaults to `0.5rem`. |
 | `thresholds` | `{ low?: number; high?: number }` | `undefined` | Recolours the arc by band. |
 | `showValue` | `boolean` | `true` | Render the rounded percentage in the centre. |
+| `label` | `string` | `''` | Accessible label (`aria-label`). Neither the caption nor the percentage can name a `role="meter"`, so set it. |
 
 ---
 
@@ -158,6 +165,7 @@ per-instance `color` input for one-off semantic tints.
 
 | Token | Default | Description |
 |---|---|---|
+| `--hub-progress-accent` | `--hub-sys-color-primary` | Root accent the other slots derive from; what the `color` input and the mixin's `$accent` write. |
 | `--hub-progress-track-bg` | tint of the accent | Track background. |
 | `--hub-progress-indicator-bg` | `--hub-progress-accent` | Filled indicator colour. |
 | `--hub-progress-height` | `0.5rem` | Bar thickness. |
