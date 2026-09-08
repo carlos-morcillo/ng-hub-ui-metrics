@@ -1,4 +1,4 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, ViewEncapsulation } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { HubRingBand, HubRingThresholds } from './ring.types';
 
 /**
@@ -24,7 +24,6 @@ import { HubRingBand, HubRingThresholds } from './ring.types';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './ring.component.html',
 	styleUrl: './ring.component.scss',
-	encapsulation: ViewEncapsulation.None,
 	host: {
 		class: 'hub-ring',
 		role: 'meter',

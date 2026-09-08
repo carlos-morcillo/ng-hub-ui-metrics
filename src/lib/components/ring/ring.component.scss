@@ -8,7 +8,11 @@
 //   --hub-ring-caption-color   Centre caption text colour.
 //   --hub-ring-low-color       Indicator stroke when below the low threshold.
 //   --hub-ring-high-color      Indicator stroke when at/above the high threshold.
-:where(.hub-ring) {
+//
+// Declared on `:where(:host)` rather than on a global `.hub-ring`: a custom property
+// inherits, so the host is enough, and the zero specificity keeps every consumer rule
+// — including `hub-metrics-theme()` — ahead of these defaults.
+:where(:host) {
 	--hub-ring-size: 4rem;
 	--hub-ring-thickness: var(--hub-ref-space-2, 0.5rem);
 	--hub-ring-track: color-mix(in oklch, var(--hub-sys-color-neutral, #6c757d) 20%, transparent);
@@ -18,7 +22,7 @@
 	--hub-ring-high-color: var(--hub-sys-color-success, #198754);
 }
 
-.hub-ring {
+:host {
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -74,11 +78,12 @@
 }
 
 // ── Threshold bands ─────────────────────────────────────────────────────────
-.hub-ring--low {
+// The band modifiers ride on the host, so they are matched through `:host()`.
+:host(.hub-ring--low) {
 	--hub-ring-indicator: var(--hub-ring-low-color);
 }
 
-.hub-ring--high {
+:host(.hub-ring--high) {
 	--hub-ring-indicator: var(--hub-ring-high-color);
 }
 

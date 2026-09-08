@@ -1,5 +1,30 @@
 # Changelog
 
+## [22.4.0] - 2026-09-08
+
+### Changed
+
+- **The three primitives keep their stylesheet to themselves.** `<hub-progress>`, `<hub-meter>` and
+  `<hub-ring>` shipped with `ViewEncapsulation.None`, which publishes every rule they emit into the
+  application's global cascade — where it competes with rules the library never sees and cannot be
+  removed by anyone who did not know it was there. None of the four reasons `CODING_RULES.md` allows
+  for leaving encapsulation applied here: all three paint their own host and their own template, and
+  nothing else. The token defaults move from `:where(.hub-progress)` to `:where(:host)`, which costs
+  nothing — a custom property inherits, so declaring it on the host reaches every element inside —
+  and the size and band modifiers, which ride on the host, are matched through `:host()`. Theming is
+  untouched: the defaults stay at specificity zero, and `hub-metrics-theme()` emits
+  `<your scope> :where(.hub-progress, …)` from your own sheet, which still matches the host element.
+  `BREAKING_CHANGES.md` records the one case that does change.
+
+### Added
+
+- **`ng-hub-ui-ds` is declared as an optional peer dependency** (`>=22.0.0`). Every token in the
+  three stylesheets has always resolved through the `--hub-sys-*` / `--hub-ref-*` ladder, and the
+  manifest said nothing about it, so a consumer reading the package on npm had no way to learn that
+  installing the token package is what gives these primitives the family palette and its dark mode.
+  It is optional because it truly is: each token carries a literal fallback and the library renders
+  without it.
+
 ## [22.3.0] - 2026-09-06
 
 ### Added

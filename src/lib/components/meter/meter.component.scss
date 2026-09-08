@@ -7,7 +7,11 @@
 //   --hub-meter-high-bg      Fill for the "above target" band  (warning).
 //   --hub-meter-height       Bar thickness.
 //   --hub-meter-radius       Corner radius of the track and indicator.
-:where(.hub-meter) {
+//
+// Declared on `:where(:host)` rather than on a global `.hub-meter`: a custom property
+// inherits, so the host is enough, and the zero specificity keeps every consumer rule
+// — including `hub-metrics-theme()` — ahead of these defaults.
+:where(:host) {
 	--hub-meter-track-bg: color-mix(in oklch, var(--hub-sys-color-neutral, #6c757d) 16%, transparent);
 	--hub-meter-low-bg: var(--hub-sys-color-danger, #dc3545);
 	--hub-meter-optimum-bg: var(--hub-sys-color-success, #198754);
@@ -18,7 +22,7 @@
 	--hub-meter-fill: var(--hub-meter-optimum-bg);
 }
 
-.hub-meter {
+:host {
 	display: block;
 	inline-size: 100%;
 }
@@ -44,15 +48,16 @@
 }
 
 // ── Band → fill selection ───────────────────────────────────────────────────
-.hub-meter--low {
+// The band modifiers ride on the host, so they are matched through `:host()`.
+:host(.hub-meter--low) {
 	--hub-meter-fill: var(--hub-meter-low-bg);
 }
 
-.hub-meter--optimum {
+:host(.hub-meter--optimum) {
 	--hub-meter-fill: var(--hub-meter-optimum-bg);
 }
 
-.hub-meter--high {
+:host(.hub-meter--high) {
 	--hub-meter-fill: var(--hub-meter-high-bg);
 }
 

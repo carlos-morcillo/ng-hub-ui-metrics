@@ -155,9 +155,9 @@ opcional proyectado mediante `<ng-content>`. Rol de host `meter`.
 ## 🎨 Estilos
 
 Cada detalle visual es una propiedad personalizada CSS `--hub-*`. Cada componente
-declara sus valores por defecto en su propio elemento (`:where(.hub-progress)` /
-`:where(.hub-meter)` / `:where(.hub-ring)`), así que un valor puesto **en el elemento**
-gana al heredado de un ancestro pelado. Define los tokens en el elemento del componente,
+declara sus valores por defecto en su propio elemento anfitrión, con especificidad cero
+(`:where(:host)`), así que un valor puesto **en el elemento** gana al heredado de un
+ancestro pelado. Define los tokens en el elemento del componente,
 o en un wrapper que *apunte a los componentes como descendientes*
 (`.wrapper :where(.hub-ring) { … }`) — que es justo lo que emite el mixin
 `hub-metrics-theme()`. Para `<hub-progress>` prefiere el input `color` por instancia

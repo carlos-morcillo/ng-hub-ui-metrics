@@ -154,9 +154,8 @@ projected via `<ng-content>`. Host role `meter`.
 ## 🎨 Styling
 
 Every visual detail is a `--hub-*` CSS custom property. Each component declares
-its defaults on its own element (`:where(.hub-progress)` / `:where(.hub-meter)` /
-`:where(.hub-ring)`), so a value set **on the element** wins over one inherited
-from a bare ancestor. Set the tokens on the component element, or on a wrapper that
+its defaults on its own host element, at zero specificity (`:where(:host)`), so a
+value set **on the element** wins over one inherited from a bare ancestor. Set the tokens on the component element, or on a wrapper that
 *targets the components as descendants* (`.wrapper :where(.hub-ring) { … }`) — which
 is exactly what the `hub-metrics-theme()` mixin emits. For `<hub-progress>` prefer the
 per-instance `color` input for one-off semantic tints.

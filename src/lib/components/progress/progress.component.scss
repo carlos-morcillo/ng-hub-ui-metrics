@@ -6,7 +6,11 @@
 //   --hub-progress-indicator-bg  Filled indicator colour (defaults to accent).
 //   --hub-progress-height        Bar thickness.
 //   --hub-progress-radius        Corner radius of the track and indicator.
-:where(.hub-progress) {
+//
+// Declared on `:where(:host)` rather than on a global `.hub-progress`: a custom
+// property inherits, so the host is enough, and the zero specificity keeps every
+// consumer rule — including `hub-metrics-theme()` — ahead of these defaults.
+:where(:host) {
 	--hub-progress-accent: var(--hub-sys-color-primary, #0d6efd);
 	--hub-progress-track-bg: color-mix(in oklch, var(--hub-progress-accent) 16%, transparent);
 	--hub-progress-indicator-bg: var(--hub-progress-accent);
@@ -14,7 +18,7 @@
 	--hub-progress-radius: var(--hub-ref-radius-pill, 50rem);
 }
 
-.hub-progress {
+:host {
 	display: flex;
 	align-items: center;
 	gap: var(--hub-ref-space-2, 0.5rem);
@@ -56,20 +60,21 @@
 }
 
 // ── Size scale ──────────────────────────────────────────────────────────────
-.hub-progress--sm {
+// The modifier classes ride on the host, so they are matched through `:host()`.
+:host(.hub-progress--sm) {
 	--hub-progress-height: var(--hub-ref-space-1, 0.25rem);
 }
 
-.hub-progress--md {
+:host(.hub-progress--md) {
 	--hub-progress-height: var(--hub-ref-space-2, 0.5rem);
 }
 
-.hub-progress--lg {
+:host(.hub-progress--lg) {
 	--hub-progress-height: var(--hub-ref-space-3, 0.75rem);
 }
 
 // ── Indeterminate loop ──────────────────────────────────────────────────────
-.hub-progress--indeterminate .hub-progress__indicator {
+:host(.hub-progress--indeterminate) .hub-progress__indicator {
 	inline-size: 40%;
 	transition: none;
 	animation: hub-progress-indeterminate 1.4s ease-in-out infinite;
@@ -85,7 +90,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.hub-progress--indeterminate .hub-progress__indicator {
+	:host(.hub-progress--indeterminate) .hub-progress__indicator {
 		animation-duration: 3s;
 	}
 

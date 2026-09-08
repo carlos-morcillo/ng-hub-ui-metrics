@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { HubMeterBand, HubMeterResolved } from './meter.types';
 
 /**
@@ -17,7 +17,6 @@ import { HubMeterBand, HubMeterResolved } from './meter.types';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './meter.component.html',
 	styleUrl: './meter.component.scss',
-	encapsulation: ViewEncapsulation.None,
 	host: {
 		class: 'hub-meter',
 		role: 'meter',

@@ -1,4 +1,4 @@
-import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, ViewEncapsulation } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { HubMetricsColor } from '../../models/metrics.types';
 import { resolveHubAccent } from 'ng-hub-ui-utils';
 import { HubProgressSize } from './progress.types';
@@ -18,7 +18,6 @@ import { HubProgressSize } from './progress.types';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './progress.component.html',
 	styleUrl: './progress.component.scss',
-	encapsulation: ViewEncapsulation.None,
 	host: {
 		class: 'hub-progress',
 		role: 'progressbar',
